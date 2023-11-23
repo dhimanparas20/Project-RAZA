@@ -11,7 +11,7 @@ $(document).ready(function() {
         formData.append('userType', userType);
   
         $.ajax({
-            url: '/login',
+            url: '/login/',
             method: 'POST',
             data: formData,
             contentType: false, // Prevent jQuery from setting content type

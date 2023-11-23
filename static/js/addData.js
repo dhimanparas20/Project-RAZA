@@ -8,7 +8,7 @@ $(document).ready(function () {
         //Send the data to the server using AJAX
         $.ajax({
             type: "POST", // You can change the HTTP method to match your server-side handling
-            url: "/admin", // Replace with your server endpoint
+            url: "/admin/", // Replace with your server endpoint
             data: formData,
             success: function (response) {
                 // Handle the server's response here (e.g., show a success message)
@@ -32,7 +32,7 @@ $(document).ready(function () {
         //Send the data to the server using AJAX
         $.ajax({
             type: "POST", // You can change the HTTP method to match your server-side handling
-            url: "/addBus", // Replace with your server endpoint
+            url: "/addBus/", // Replace with your server endpoint
             data: formData,
             success: function (response) {
                 // Handle the server's response here (e.g., show a success message)
@@ -60,7 +60,7 @@ function del(type){
     if (deldata != ""){
         $.ajax({
             type: "POST",
-            url: "/delete",
+            url: "/delete/",
             data: {"id":deldata,"type":type},
             success: function (response) {
                 if (response.msg==true){

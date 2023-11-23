@@ -47,7 +47,7 @@ async function sendData() {
 
             if (oldLat !== latitude || oldLong !== longitude) {
                 const response = await $.ajax({
-                    url: '/locate',
+                    url: '/locate/',
                     method: 'POST',
                     data: formData,
                     contentType: false,
@@ -90,7 +90,7 @@ function makeOffline(pilotId,busID){
     formData.append("username",pilotId)
     formData.append("busiD",busID)
     $.ajax({
-        url: '/makeoffline',
+        url: '/makeoffline/',
         method: 'POST',
         data: formData,
         contentType: false, // Prevent jQuery from setting content type

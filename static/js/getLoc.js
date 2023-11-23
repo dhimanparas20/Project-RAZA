@@ -51,7 +51,7 @@
       // console.log(busId)
       // console.log("==========================")
       $.ajax({
-        url: `/getData`,
+        url: `/getData/`,
         method: 'GET',
         data:{"id":busId,"start":start,"dest":dest},
         success: function(response) {
@@ -95,21 +95,23 @@
         var id = results.busID;
         var from = results.from;
         var to = results.to;
-        var message = results.msg;
+        var message = results.msg
+        var isBusOnline= results.online 
+        if (isBusOnline===true){   //Only Track if the bus is online and running
+          var newRow = $("<tr>").appendTo(table);
+          $("<td>").text(srno).appendTo(newRow);
+          $("<td>").text(id).appendTo(newRow);
+          $("<td>").text(from).appendTo(newRow);
+          $("<td>").text(to).appendTo(newRow);
+          $("<td>").text(message).appendTo(newRow);
+          var trackLink = $("<a>").text("Track").attr("href", "javascript:void(0)").click(function() {
+              latitude = results.latitude
+              longitude = results.longitude
+          });
+          $("<td>").append(trackLink).appendTo(newRow);
 
-        var newRow = $("<tr>").appendTo(table);
-        $("<td>").text(srno).appendTo(newRow);
-        $("<td>").text(id).appendTo(newRow);
-        $("<td>").text(from).appendTo(newRow);
-        $("<td>").text(to).appendTo(newRow);
-        $("<td>").text(message).appendTo(newRow);
-        var trackLink = $("<a>").text("Track").attr("href", "javascript:void(0)").click(function() {
-            latitude = results.latitude
-            longitude = results.longitude
-         });
-        $("<td>").append(trackLink).appendTo(newRow);
-
-        // Add the location column as needed.
+          // Add the location column as needed.
+        }  
     }
 
     // Append the table to the tableContainer div

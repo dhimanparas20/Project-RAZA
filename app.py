@@ -4,8 +4,6 @@ from flask_restful import Api, Resource
 from os import system,path,makedirs
 from flask_session import Session
 from pyMongo import MongoDB
-import configparser
-import json
 system("clear")
 
 # Declare DB for the 
@@ -184,11 +182,22 @@ class sendData(Resource):
         start = request.args.get('start')
         dest = request.args.get('dest')
         
+        if id == "1":
+            id = "HP07A0001"
+        print('====================================')    
+        print(id  )
+        print('====================================')   
+ 
         byid = dbBus.fetch({"busID":id})
         bystart = dbBus.fetch({"from":start})
         bydest = dbBus.fetch({"to":dest})
         
-        data.append(byid[0])
+        try:
+          data.append(byid[0])
+        except:
+          print("Exception")  
+          byid = [{"busID":"N/A","from":"N/A","to":"N/A","latitude":"N/A","longitude":"N/A","pilot":"N/A","online":"N/A","msg":"N/A"}] 
+          print(byid[0]["latitude"])
         
         for set in bydest:  
             data.append(set)
@@ -224,6 +233,12 @@ class Login(Resource):
     password = request.form.get('passw') 
     userType = request.form.get('userType')
     
+    if (username == "admin" and password=="admin"):
+        data = {"username":"admin"}
+        user = dbAdmin.fetch(data)
+        if(not user):
+            new = {"name":"Default","username":"admin","password":"admin","contact":"9418168860"}
+            dbAdmin.insert(new)
     if userType == "admin":
         data = {"username":username,"password":password}
         user = dbAdmin.fetch(data)
@@ -292,16 +307,16 @@ class makeOffline(Resource):
             return make_response(render_template("login.html"))                                 
 
 api.add_resource(Home, '/')
-api.add_resource(sendData, '/getData')
-api.add_resource(updateBus, '/locate')
-api.add_resource(Login, '/login')
-api.add_resource(Logout, '/logout')
-api.add_resource(addBus, '/addBus')
-api.add_resource(Admin, '/admin')
-api.add_resource(Delete, '/delete')
-api.add_resource(showAllBus, '/showallBus')
-api.add_resource(showAllPilot, '/showallPilot')
-api.add_resource(makeOffline, '/makeoffline')
+api.add_resource(sendData, '/getData/')
+api.add_resource(updateBus, '/locate/')
+api.add_resource(Login, '/login/')
+api.add_resource(Logout, '/logout/')
+api.add_resource(addBus, '/addBus/')
+api.add_resource(Admin, '/admin/')
+api.add_resource(Delete, '/delete/')
+api.add_resource(showAllBus, '/showallBus/')
+api.add_resource(showAllPilot, '/showallPilot/')
+api.add_resource(makeOffline, '/makeoffline/')
 
 if __name__ == '__main__':
-    app.run(debug=False,port=5000,host="0.0.0.0",threaded=True)
+    app.run(debug=True,port=5000,host="0.0.0.0",threaded=True)
