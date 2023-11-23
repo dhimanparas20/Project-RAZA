@@ -183,10 +183,7 @@ class sendData(Resource):
         dest = request.args.get('dest')
         
         if id == "1":
-            id = "HP07A0001"
-        print('====================================')    
-        print(id  )
-        print('====================================')   
+            id = "HP07A0001"  
  
         byid = dbBus.fetch({"busID":id})
         bystart = dbBus.fetch({"from":start})
@@ -195,9 +192,8 @@ class sendData(Resource):
         try:
           data.append(byid[0])
         except:
-          print("Exception")  
+
           byid = [{"busID":"N/A","from":"N/A","to":"N/A","latitude":"N/A","longitude":"N/A","pilot":"N/A","online":"N/A","msg":"N/A"}] 
-          print(byid[0]["latitude"])
         
         for set in bydest:  
             data.append(set)
@@ -319,4 +315,4 @@ api.add_resource(showAllPilot, '/showallPilot/')
 api.add_resource(makeOffline, '/makeoffline/')
 
 if __name__ == '__main__':
-    app.run(debug=True,port=5000,host="0.0.0.0",threaded=True)
+    app.run(debug=False,port=5000,host="0.0.0.0",threaded=True)
